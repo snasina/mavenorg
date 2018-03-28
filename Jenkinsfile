@@ -20,7 +20,7 @@ node {
       //withSonarQubeEnv("SonarQube") {
       //}
       withMaven(jdk: 'jdk8', maven: 'maven') {
-          sh ' mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar ' +
+          sh ' mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar ' +
              ' -Dsonar.host.url=https://sonarcloud.io ' +
              ' -Dsonar.organization=saran2250 '+ 
              ' -Dsonar.login=2131187b401afba5b86667689e3ef316eecad948 '
