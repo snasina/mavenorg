@@ -5,12 +5,12 @@ node {
     git credentialsId: '2e401477-6a37-4f80-af9e-c7d19b68a711', url: 'https://github.com/snasina/sonar-scanning-examples.git'
    }
    stage('Build') {
-     withMaven(jdk: 'jdk8', maven: 'Maven-3.5.2') {
+     withMaven(jdk: 'jdk8', maven: 'maven') {
        sh 'mvn clean compile'
      }
    }
    stage('Unit Test') {
-     withMaven(jdk: 'jdk8', maven: 'Maven-3.5.2') {
+     withMaven(jdk: 'jdk8', maven: 'maven') {
        sh 'mvn test'
      }
    }
@@ -18,7 +18,7 @@ node {
       //def job = build job: 'SonarJob'
       //withSonarQubeEnv("SonarQube") {
       //}
-      withMaven(jdk: 'jdk8', maven: 'Maven-3.5.2') {
+      withMaven(jdk: 'jdk8', maven: 'maven') {
           sh ' mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar ' +
              ' -Dsonar.host.url=https://sonarcloud.io ' +
              ' -Dsonar.organization=saran2250 '+ 
@@ -36,7 +36,7 @@ node {
      // }
    
     stage('Archival') {
-      withMaven(jdk: 'jdk8', maven: 'Maven-3.5.2') {
+      withMaven(jdk: 'jdk8', maven: 'maven') {
        //sh 'mvn package'
      }
    }
