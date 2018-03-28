@@ -22,7 +22,7 @@ node {
       withMaven(jdk: 'jdk8', maven: 'maven') {
           sh ' mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar ' +
              ' -Dsonar.host.url=https://sonarcloud.io ' +
-             ' -Dsonar.organization=saran2250 '+ 
+             ' -Dsonar.organization=saran2250-github '+ 
              ' -Dsonar.login=2131187b401afba5b86667689e3ef316eecad948 '
           }
       }
