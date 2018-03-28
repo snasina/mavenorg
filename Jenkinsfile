@@ -2,7 +2,8 @@ node {
    
    stage('Code Checkout') { // for display purposes
       // Get some code from a GitHub repository
-    git credentialsId: '2e401477-6a37-4f80-af9e-c7d19b68a711', url: 'https://github.com/snasina/sonar-scanning-examples.git'
+    git credentialsId: '2e401477-6a37-4f80-af9e-c7d19b68a711', url: 'https://github.com/snasina/mavenorg.git'
+
    }
    stage('Build') {
      withMaven(jdk: 'jdk8', maven: 'maven') {
