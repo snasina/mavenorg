@@ -15,6 +15,10 @@ node {
        sh 'mvn test'
      }
    }
+   stage 'Gradle Static Analysis'
+    withSonarQubeEnv {
+        sh "./gradlew clean sonarqube"
+    }
    stage('SonarQube Analysis') {
       //def job = build job: 'SonarJob'
       //withSonarQubeEnv("SonarQube") {
