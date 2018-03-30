@@ -17,7 +17,7 @@ node {
    }
    stage 'Maven Analysis'
     withSonarQubeEnv {
-        sh 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+        sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
     }
    stage('SonarQube Analysis') {
       //def job = build job: 'SonarJob'
