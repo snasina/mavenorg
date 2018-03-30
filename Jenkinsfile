@@ -17,7 +17,7 @@ node {
    }
    stage 'Gradle Static Analysis'
     withSonarQubeEnv {
-        sh "./gradlew clean sonarqube"
+        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
     }
    stage('SonarQube Analysis') {
       //def job = build job: 'SonarJob'
