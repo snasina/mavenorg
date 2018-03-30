@@ -15,9 +15,9 @@ node {
        sh 'mvn test'
      }
    }
-   stage 'Gradle Static Analysis'
+   stage 'Maven Analysis'
     withSonarQubeEnv {
-        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+        sh 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
     }
    stage('SonarQube Analysis') {
       //def job = build job: 'SonarJob'
