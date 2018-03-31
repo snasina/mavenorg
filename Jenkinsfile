@@ -18,7 +18,7 @@ node {
    stage ('Maven Analysis'){
    withSonarQubeEnv {
      //sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:5.3:sonar'
-       sh "${scannerHome}/bin/sonar-scanner"
+       //sh "${scannerHome}/bin/sonar-scanner"
   }
    }
    stage('SonarQube Analysis') {
