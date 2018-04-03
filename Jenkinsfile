@@ -1,5 +1,7 @@
 node {
-   
+      def server = Artifactory.server('saran.jfrog.io')
+      def buildInfo = Artifactory.newBuildInfo()
+      def rtMaven = Artifactory.newMavenBuild()
    stage('Code Checkout') { // for display purposes
       // Get some code from a GitHub repository
     git credentialsId: '2e401477-6a37-4f80-af9e-c7d19b68a711', url: 'https://github.com/snasina/mavenorg.git'
@@ -33,6 +35,15 @@ node {
           }
       }
    
+   stage ('Artifactory configuration') {
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage..:
+         
+        rtMaven.tool = 'apache-maven-3.5.2' // Tool name from Jenkins configuration
+        rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
+        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+        rtMaven.deployer.deployArtifacts = false // Disable artifacts deployment during Maven run
+     }
+   
     //stage("Quality Gate"){
           //timeout(time: 1, unit: 'HOURS') {
              // def qg = waitForQualityGate()
@@ -48,13 +59,16 @@ node {
      }
    }
      stage('Deploy to Artifactory Repo') {
+        rtMaven.run pom: 'maven-example/pom.xml', goals: 'install', buildInfo: buildInfo
      }
 
    
     stage('Deploy to Dev') {
+       rtMaven.deployer.deployArtifacts buildInfo
       
    }
-   stage('Smoke Test Execution') {
+   stage('Publish build info') {
+      server.publishBuildInfo buildInfo
       
    }
 
