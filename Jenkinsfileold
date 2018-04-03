@@ -13,8 +13,10 @@ node {
      }
    }
    stage('Unit Test') {
-     withMaven(jdk: 'jdk8', maven: 'maven') {
-       sh 'mvn test'
+     //withMaven(jdk: 'jdk8', maven: 'maven') {
+       //sh 'mvn test'
+         rtMaven.tool = 'apache-maven-3.5.2' // Tool name from Jenkins configuration
+        rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean test'
      }
    }
    stage ('Maven Analysis'){
