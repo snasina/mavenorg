@@ -1,15 +1,15 @@
 node {
-    def server = Artifactory.server('pavan.jfrog.io')
+    def server = Artifactory.server('saran.jfrog.io')
     def buildInfo = Artifactory.newBuildInfo()
     def rtMaven = Artifactory.newMavenBuild()
     
     stage ('Checkout & Build') {
-        git url: 'https://github.com/pavants52/jfrog-project-examples.git'
+        git url: 'https://github.com/snasina/mavenorg.git'
     }
  
     stage ('Unit Test') {
-        rtMaven.tool = 'apache-maven-3.5.2' // Tool name from Jenkins configuration
-        rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean test'
+        rtMaven.tool = 'maven' // Tool name from Jenkins configuration
+        rtMaven.run pom: 'pom.xml', goals: 'clean test'
     }
     
     stage('SonarQube Analysis') {
@@ -21,14 +21,14 @@ node {
     stage ('Artifactory configuration') {
         // Obtain an Artifactory server instance, defined in Jenkins --> Manage..:
          
-        rtMaven.tool = 'apache-maven-3.5.2' // Tool name from Jenkins configuration
+        rtMaven.tool = 'maven' // Tool name from Jenkins configuration
         rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
         rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
         rtMaven.deployer.deployArtifacts = false // Disable artifacts deployment during Maven run
      }
             
     stage ('Install') {
-        rtMaven.run pom: 'maven-example/pom.xml', goals: 'install', buildInfo: buildInfo
+        rtMaven.run pom: 'pom.xml', goals: 'install', buildInfo: buildInfo
      }
  
     stage ('Deploy') {
